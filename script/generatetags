@@ -1,0 +1,13 @@
+#!/bin/bash
+# currently not useful because gutentags is automatically doing this
+
+readonly tagfile=.tags
+
+if which ctags >/dev/null ; then
+  ctags -R --language-force=c++ -o "$tagfile"  .
+else
+  if [[ ! -f "$tagfile" ]] ; then
+    touch "$tagfile"
+  fi
+fi
+
