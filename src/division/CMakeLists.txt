@@ -1,12 +1,29 @@
 cmake_minimum_required(VERSION 3.2)
-project(division C CXX)
 
-set(SOURCE_FILES
-    division.h
-    division.cpp
+set(SOURCE_HEADERS division.h)
+set(SOURCE_FILES division.cpp)
+
+add_library(division
+  SHARED
+  STATIC
+  ${SOURCE_FILES}
+  ${SOURCE_HEADERS}
 )
 
-add_library(division SHARED STATIC ${SOURCE_FILES})
+target_include_directories(
+  division PUBLIC
+  "${CMAKE_CURRENT_SOURCE_DIR}"
+)
 
-install(TARGETS division DESTINATION ${DIVISIBLE_INSTALL_LIB_DIR})
-install(FILES division.h DESTINATION ${DIVISIBLE_INSTALL_INCLUDE_DIR})
+set_target_properties(division
+  PROPERTIES
+  PUBLIC_HEADER "${SOURCE_HEADERS}"
+)
+
+install(
+  TARGETS division
+  PUBLIC_HEADER DESTINATION include
+  LIBRARY DESTINATION lib
+  ARCHIVE DESTINATION lib
+)
+
